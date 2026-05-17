@@ -11,7 +11,7 @@ class BackendTests(unittest.TestCase):
     @patch('app.worker_request')
     def test_create_task_validation(self, _mock_worker_request):
         response = self.client.post('/api/tasks/spellcheck', json={'text': '', 'language': 'auto'})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
 
     @patch('app.worker_request')
     def test_create_task_proxy(self, mock_worker_request):
