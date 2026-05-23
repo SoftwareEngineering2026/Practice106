@@ -50,14 +50,11 @@ docker compose down
 pip install pytest
 pytest tests/```
 
+----
 ## Особенности решения:
 
-✅ Одна точка входа — Nginx на порту 8080
-
-✅ Все сервисы в одной сети Docker
-
-✅ Worker выполняет "длительные задачи" (generation с delay)
-
-✅ Готово к запуску одной командой docker compose up
-
-✅ Полностью микросервисный (frontend, backend, worker, redis)
+- ✅ Одна точка входа — Nginx на порту 8080
+- ✅ Все сервисы в одной сети Docker
+- ✅ Worker выполняет "длительные задачи" (generation с delay)
+- ✅ Готово к запуску одной командой docker compose up
+- ✅ Полностью микросервисный (frontend, backend, worker, redis)
