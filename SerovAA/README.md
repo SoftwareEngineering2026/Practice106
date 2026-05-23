@@ -14,13 +14,13 @@
 ## Запуск
 
 bash
-docker compose up -d
+- docker compose up -d
 Приложение будет доступно по адресу: http://localhost:8080
 
 ## Остановить:
 
 bash
-docker compose down
+- docker compose down
 
 ## Взаимодействие сервисов
 Пользователь вводит параметры пароля (длина, цифры, спецсимволы) и нажимает «Generate».
