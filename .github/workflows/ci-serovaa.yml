@@ -1,8 +1,6 @@
-name: CI Pipeline
+name: CI - SerovAA
 
 on:
-  push:
-    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
@@ -12,59 +10,44 @@ jobs:
     services:
       redis:
         image: redis:alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        ports: [6379:6379]
+        options: --health-cmd "redis-cli ping" --health-interval 10s
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
+      - name: Install backend dependencies
         working-directory: SerovAA/backend
         run: pip install -r requirements.txt
       - name: Install pytest
         run: pip install pytest
       - name: Run backend tests
         working-directory: SerovAA
-        run: |
-          # Ждём Redis (хотя healthcheck уже есть, на всякий случай)
-          sleep 2
-          PYTHONPATH=. python -m pytest tests/test_backend.py -v --tb=short
+        run: PYTHONPATH=. python -m pytest tests/test_backend.py -v
         env:
-          REDIS_HOST: localhost   # чтобы backend точно знал, где Redis
+          REDIS_HOST: localhost
 
   test-worker:
     runs-on: ubuntu-latest
     services:
       redis:
         image: redis:alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        ports: [6379:6379]
+        options: --health-cmd "redis-cli ping" --health-interval 10s
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
+      - name: Install worker dependencies
         working-directory: SerovAA/worker
         run: pip install -r requirements.txt
       - name: Install pytest
         run: pip install pytest
       - name: Run worker tests
         working-directory: SerovAA
-        run: |
-          sleep 2
-          PYTHONPATH=. python -m pytest tests/test_worker.py -v --tb=short
+        run: PYTHONPATH=. python -m pytest tests/test_worker.py -v
         env:
           REDIS_HOST: localhost
 
