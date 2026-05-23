@@ -1,0 +1,60 @@
+name: CI - SerovAA
+
+on:
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:alpine
+        ports: [6379:6379]
+        options: --health-cmd "redis-cli ping" --health-interval 10s
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install backend dependencies
+        working-directory: SerovAA/backend
+        run: pip install -r requirements.txt
+      - name: Install pytest
+        run: pip install pytest
+      - name: Run backend tests
+        working-directory: SerovAA
+        run: PYTHONPATH=. python -m pytest tests/test_backend.py -v
+        env:
+          REDIS_HOST: localhost
+
+  test-worker:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:alpine
+        ports: [6379:6379]
+        options: --health-cmd "redis-cli ping" --health-interval 10s
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install worker dependencies
+        working-directory: SerovAA/worker
+        run: pip install -r requirements.txt
+      - name: Install pytest
+        run: pip install pytest
+      - name: Run worker tests
+        working-directory: SerovAA
+        run: PYTHONPATH=. python -m pytest tests/test_worker.py -v
+        env:
+          REDIS_HOST: localhost
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker images
+        working-directory: SerovAA
+        run: docker compose build
