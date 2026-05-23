@@ -48,7 +48,7 @@ docker compose down
 ### Как запустить тесты локально:
 ```bash
 pip install pytest
-pytest tests/'''
+pytest tests/```
 
 ## Особенности решения:
 
