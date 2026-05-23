@@ -46,9 +46,9 @@ docker compose down
 - ✅ Сборка Docker образов (docker compose build)
 
 ### Как запустить тесты локально:
-''bash
+'''bash
 pip install pytest
-pytest tests/''
+pytest tests/'''
 
 ----
 ## Особенности решения:
