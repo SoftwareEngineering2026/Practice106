@@ -11,7 +11,7 @@
 \- `divide(a, b)` - returns quotient
 
 \- `greet(name)` - returns greeting
-exeption kink https://github.com/GelioGabal/Polyanskys_106/actions/runs/27605381852
+exeption link https://github.com/GelioGabal/Polyanskys_106/actions/runs/27605381852
 
 
 \## Run tests
