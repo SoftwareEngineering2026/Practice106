@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "petrukhin-text-analyzer"
+version = "1.0.0"
+description = "Небольшой учебный проект для демонстрации Continuous Integration"
+requires-python = ">=3.11"
+authors = [
+    {name = "Олег Петрухин"}
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
